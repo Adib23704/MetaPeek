@@ -55,10 +55,15 @@ export default function Home() {
 						</h1>
 					</div>
 
-					<p className="mx-auto max-w-2xl text-xl text-gray-600">
+					<p className="mx-auto mb-4 max-w-2xl text-xl text-gray-600">
 						Instantly preview website metadata, Open Graph images, and technical
 						details. No signup required – just paste a URL and explore!
 					</p>
+					<div className="flex items-center justify-center gap-4 text-sm text-gray-500">
+						<span>⚡ Real-Time Fetch</span>
+						<span>•</span>
+						<span>🔓 No Auth Required</span>
+					</div>
 				</div>
 				<URLInput onSubmit={handleFetchMetadata} loading={loading} />
 				<ErrorMessage error={error} />
