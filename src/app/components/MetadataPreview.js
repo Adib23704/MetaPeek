@@ -21,7 +21,7 @@ export default function MetadataPreview({ metadata }) {
 	return (
 		<div className="mx-auto mt-8 w-full max-w-6xl space-y-6">
 			<div className="card">
-				<div className="mb-4 flex items-center justify-between">
+				<div className="mb-4 flex items-start justify-between gap-4 sm:flex-row sm:items-center">
 					<div className="flex items-center space-x-2">
 						{metadata.favicon && !faviconError && (
 							<img
@@ -80,7 +80,7 @@ export default function MetadataPreview({ metadata }) {
 						)}
 					</div>
 
-					<div className="flex justify-center">
+					<div className="flex items-center justify-center">
 						{metadata.ogImage && !imageError ? (
 							<div className="relative w-full max-w-sm">
 								<img
@@ -101,12 +101,12 @@ export default function MetadataPreview({ metadata }) {
 
 			<div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
 				<div className="border-b border-gray-200">
-					<nav className="flex space-x-8 px-6">
+					<nav className="flex space-x-4 overflow-x-auto px-4 sm:space-x-8 sm:px-6">
 						{tabs.map((tab) => (
 							<button
 								key={tab.id}
 								onClick={() => setActiveTab(tab.id)}
-								className={`border-b-2 px-2 py-4 text-sm font-medium transition-colors ${
+								className={`flex-shrink-0 border-b-2 px-2 py-4 text-sm font-medium whitespace-nowrap transition-colors ${
 									activeTab === tab.id
 										? 'border-blue-500 text-blue-600'
 										: 'border-transparent text-gray-500 hover:text-gray-700'
@@ -119,7 +119,7 @@ export default function MetadataPreview({ metadata }) {
 					</nav>
 				</div>
 
-				<div className="p-6">
+				<div className="p-4 sm:p-6">
 					{activeTab === 'overview' && (
 						<div className="space-y-6">
 							<div className="grid gap-6 md:grid-cols-2">
@@ -266,7 +266,9 @@ export default function MetadataPreview({ metadata }) {
 													<span className="font-mono text-gray-600">
 														{key}:
 													</span>
-													<span className="ml-2 text-gray-800">{value}</span>
+													<span className="ml-2 break-all text-gray-800">
+														{value}
+													</span>
 												</div>
 											))
 										) : (
@@ -288,7 +290,9 @@ export default function MetadataPreview({ metadata }) {
 														<span className="font-mono text-gray-600">
 															{key}:
 														</span>
-														<span className="ml-2 text-gray-800">{value}</span>
+														<span className="ml-2 break-all text-gray-800">
+															{value}
+														</span>
 													</div>
 												)
 											)
@@ -314,7 +318,9 @@ export default function MetadataPreview({ metadata }) {
 										([key, value]) => (
 											<div key={key} className="text-sm">
 												<span className="font-mono text-gray-600">{key}:</span>
-												<span className="ml-2 text-gray-800">{value}</span>
+												<span className="ml-2 break-all text-gray-800">
+													{value}
+												</span>
 											</div>
 										)
 									)}
@@ -327,7 +333,7 @@ export default function MetadataPreview({ metadata }) {
 										Structured Data
 									</h3>
 									<div className="max-h-60 overflow-y-auto rounded bg-gray-50 p-3">
-										<pre className="text-sm text-gray-800">
+										<pre className="text-sm break-all whitespace-pre-wrap text-gray-800">
 											{JSON.stringify(metadata.structuredData, null, 2)}
 										</pre>
 									</div>
@@ -401,7 +407,9 @@ export default function MetadataPreview({ metadata }) {
 													<span className="font-mono text-gray-600">
 														{key}:
 													</span>
-													<span className="ml-2 text-gray-800">{value}</span>
+													<span className="ml-2 break-all text-gray-800">
+														{value}
+													</span>
 												</div>
 											)
 										)
@@ -417,8 +425,8 @@ export default function MetadataPreview({ metadata }) {
 				</div>
 
 				<div className="border-t border-gray-200 px-6 py-4">
-					<div className="flex items-center justify-between">
-						<span className="text-sm text-gray-600">
+					<div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+						<span className="text-center text-sm text-gray-600 sm:text-left">
 							Fetched at: {new Date(metadata.fetchedAt).toLocaleString()}
 						</span>
 						<button
@@ -431,7 +439,7 @@ export default function MetadataPreview({ metadata }) {
 
 					{showRawData && (
 						<div className="mt-4">
-							<pre className="scrollbar-hide max-h-96 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-green-400">
+							<pre className="scrollbar-hide max-h-96 overflow-auto rounded-lg bg-gray-900 p-4 text-sm break-all whitespace-pre-wrap text-green-400">
 								{JSON.stringify(metadata, null, 2)}
 							</pre>
 						</div>

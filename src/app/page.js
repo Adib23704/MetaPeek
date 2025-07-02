@@ -36,34 +36,40 @@ export default function Home() {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 pb-20">
+		<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 pb-24">
 			<div className="container mx-auto px-4 py-12">
-				<div className="mb-12 text-center">
-					<div className="mb-4 flex items-center justify-center gap-4">
-						<div className="flex-shrink-0">
-							<Image
-								src={logo}
-								alt="MetaPeek Logo"
-								width={64}
-								height={64}
-								className="mr-4"
-							/>
-						</div>
+				<div className="mb-8 text-center sm:mb-10 lg:mb-12">
+					<div className="mb-4 flex flex-col items-center justify-center gap-3 sm:mb-6 sm:flex-row sm:gap-4">
+						<Image
+							src={logo}
+							alt="MetaPeek Logo"
+							width={64}
+							height={64}
+							className="sm:size-16 lg:size-20"
+						/>
 
-						<h1 className="text-4xl font-bold text-gray-900 md:text-6xl">
+						<h1 className="text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
 							Meta<span className="text-blue-500">Peek</span>
 						</h1>
 					</div>
 
-					<p className="mx-auto mb-4 max-w-2xl text-xl text-gray-600">
+					<div className="mb-4 flex flex-wrap items-center justify-center gap-2 sm:mb-6 sm:gap-4">
+						<span className="text-sm sm:text-xl lg:text-lg">
+							⚡ Real-Time Fetch
+						</span>
+						<span className="text-sm text-gray-400 sm:inline lg:text-lg">
+							•
+						</span>
+						<span className="text-sm sm:text-xl lg:text-lg">
+							🔓 No Auth Required
+						</span>
+					</div>
+
+					{/* Description - Responsive text and spacing */}
+					<p className="mx-auto max-w-xs px-2 text-base leading-relaxed text-gray-600 sm:max-w-2xl sm:px-0 sm:text-lg lg:max-w-4xl lg:text-xl">
 						Instantly preview website metadata, Open Graph images, and technical
 						details. No signup required – just paste a URL and explore!
 					</p>
-					<div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-						<span>⚡ Real-Time Fetch</span>
-						<span>•</span>
-						<span>🔓 No Auth Required</span>
-					</div>
 				</div>
 				<URLInput onSubmit={handleFetchMetadata} loading={loading} />
 				<ErrorMessage error={error} />

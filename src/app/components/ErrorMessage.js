@@ -2,12 +2,12 @@ export default function ErrorMessage({ error }) {
 	if (!error) return null
 
 	return (
-		<div className="mx-auto mt-8 w-full max-w-2xl">
-			<div className="rounded-lg border border-red-200 bg-red-50 p-4">
-				<div className="flex items-center">
-					<div className="flex-shrink-0">
+		<div className="mx-auto mt-6 w-full max-w-xs px-4 sm:mt-8 sm:max-w-lg sm:px-0 md:max-w-2xl lg:max-w-3xl xl:max-w-4xl">
+			<div className="rounded-lg border border-red-200 bg-red-50 p-3 sm:p-4">
+				<div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+					<div className="flex-shrink-0 self-start sm:self-center">
 						<svg
-							className="h-5 w-5 text-red-400"
+							className="h-4 w-4 text-red-400 sm:h-5 sm:w-5"
 							viewBox="0 0 20 20"
 							fill="currentColor"
 						>
@@ -18,13 +18,13 @@ export default function ErrorMessage({ error }) {
 							/>
 						</svg>
 					</div>
-					<div className="ml-3">
-						<h3 className="text-sm font-medium text-red-800">
+					<div className="min-w-0 flex-1">
+						<h3 className="mb-1 text-sm font-medium text-red-800">
 							Error fetching metadata
 						</h3>
-						<div className="mt-2 text-sm text-red-700">
-							<p>{error}</p>
-						</div>
+						<p className="text-xs break-words text-red-700 sm:text-sm">
+							{error}
+						</p>
 					</div>
 				</div>
 			</div>
