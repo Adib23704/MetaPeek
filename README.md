@@ -18,7 +18,7 @@
 
 MetaPeek is a web application that allows you to enter a URL and instantly see its metadata—including the title, description, and preview image. It's a handy tool for developers, content creators, and social media managers to check how a link will appear when shared across different platforms.
 
-### Live: https://metapeak.adibdev.me
+### Live: https://metapeek.adibdev.me
 
 ## ✨ Features
 
@@ -76,12 +76,6 @@ MetaPeek is a web application that allows you to enter a URL and instantly see i
     npm run dev
     `
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-**Build for production:**
-
-```sh
-npm run build
-```
 
 ## 🔌 API Endpoint
 
