@@ -36,7 +36,7 @@ MetaPeek is a web application that allows you to enter a URL and instantly see i
 - **Backend API:** Next.js API Routes
 - **HTTP Requests:** [Axios](https://axios-http.com/)
 - **HTML Parsing:** [Cheerio](https://cheerio.js.org/)
-- **Linting & Formatting:** ESLint & Prettier
+- **Linting & Formatting:** [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/)
 
 ## 📸 Screenshots
 
