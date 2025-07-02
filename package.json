@@ -4,7 +4,7 @@
 	"private": true,
 	"author": "Adib23704",
 	"scripts": {
-		"dev": "next dev",
+		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
@@ -23,7 +23,7 @@
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3",
-		"autoprefixer": "^10.4.21",
+		"@tailwindcss/postcss": "^4.1.11",
 		"eslint": "^9",
 		"eslint-config-next": "15.3.4",
 		"eslint-config-prettier": "^10.1.5",
