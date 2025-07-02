@@ -1,0 +1,17 @@
+{
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.organizeImports": "explicit"
+	},
+	"tailwindCSS.experimental.classRegex": [
+		["classNames\\(([^)]*)\\)", "'([^']*)'"],
+		["classNames\\(([^)]*)\\)", "\"([^\"]*)\""],
+		["cn\\(([^)]*)\\)", "'([^']*)'"],
+		["cn\\(([^)]*)\\)", "\"([^\"]*)\""]
+	],
+	"css.validate": false,
+	"scss.validate": false,
+	"less.validate": false
+}
