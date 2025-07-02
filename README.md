@@ -72,10 +72,16 @@ MetaPeek is a web application that allows you to enter a URL and instantly see i
     ```
 
 4.  **Run the development server:**
-    `sh
+    ```sh
     npm run dev
-    `
+    ```
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+**Build for production:**
+
+```sh
+npm run build
+```
 
 ## 🔌 API Endpoint
 
