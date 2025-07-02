@@ -1,36 +1,36 @@
-'use client';
-import { useState } from 'react';
-import URLInput from '@/components/URLInput';
-import MetadataPreview from '@/components/MetadataPreview';
-import ErrorMessage from '@/components/ErrorMessage';
+'use client'
+import { useState } from 'react'
+import URLInput from './components/URLInput'
+import MetadataPreview from './components/MetadataPreview'
+import ErrorMessage from './components/ErrorMessage'
 
 export default function Home() {
-	const [metadata, setMetadata] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState('');
+	const [metadata, setMetadata] = useState(null)
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState('')
 
 	const handleFetchMetadata = async (url) => {
-		setLoading(true);
-		setError('');
-		setMetadata(null);
+		setLoading(true)
+		setError('')
+		setMetadata(null)
 
 		try {
 			const response = await fetch(
 				`/api/fetchMeta?url=${encodeURIComponent(url)}`
-			);
-			const data = await response.json();
+			)
+			const data = await response.json()
 
 			if (!response.ok) {
-				throw new Error(data.error || 'Failed to fetch metadata');
+				throw new Error(data.error || 'Failed to fetch metadata')
 			}
 
-			setMetadata(data);
+			setMetadata(data)
 		} catch (err) {
-			setError(err.message);
+			setError(err.message)
 		} finally {
-			setLoading(false);
+			setLoading(false)
 		}
-	};
+	}
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -56,5 +56,5 @@ export default function Home() {
 				</footer>
 			</div>
 		</div>
-	);
+	)
 }

@@ -1,5 +1,5 @@
 export default function ErrorMessage({ error }) {
-	if (!error) return null;
+	if (!error) return null
 
 	return (
 		<div className="mx-auto mt-8 w-full max-w-2xl">
@@ -29,5 +29,5 @@ export default function ErrorMessage({ error }) {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }

@@ -1,27 +1,27 @@
-'use client';
-import { useState } from 'react';
+'use client'
+import { useState } from 'react'
 
 export default function URLInput({ onSubmit, loading }) {
-	const [url, setUrl] = useState('');
-	const [error, setError] = useState('');
+	const [url, setUrl] = useState('')
+	const [error, setError] = useState('')
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
-		setError('');
+		e.preventDefault()
+		setError('')
 
 		if (!url.trim()) {
-			setError('Please enter a URL');
-			return;
+			setError('Please enter a URL')
+			return
 		}
 
-		onSubmit(url.trim());
-	};
+		onSubmit(url.trim())
+	}
 
 	const handleKeyPress = (e) => {
 		if (e.key === 'Enter') {
-			handleSubmit(e);
+			handleSubmit(e)
 		}
-	};
+	}
 
 	return (
 		<div className="mx-auto w-full max-w-2xl">
@@ -63,5 +63,5 @@ export default function URLInput({ onSubmit, loading }) {
 				</button>
 			</form>
 		</div>
-	);
+	)
 }

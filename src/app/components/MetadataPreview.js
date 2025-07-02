@@ -1,12 +1,12 @@
-'use client';
-import { useState } from 'react';
+'use client'
+import { useState } from 'react'
 
 export default function MetadataPreview({ metadata }) {
-	const [showRawData, setShowRawData] = useState(false);
-	const [imageError, setImageError] = useState(false);
-	const [faviconError, setFaviconError] = useState(false);
+	const [showRawData, setShowRawData] = useState(false)
+	const [imageError, setImageError] = useState(false)
+	const [faviconError, setFaviconError] = useState(false)
 
-	if (!metadata) return null;
+	if (!metadata) return null
 
 	return (
 		<div className="mx-auto mt-8 w-full max-w-4xl space-y-6">
@@ -107,5 +107,5 @@ export default function MetadataPreview({ metadata }) {
 				)}
 			</div>
 		</div>
-	);
+	)
 }
