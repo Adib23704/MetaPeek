@@ -1,8 +1,21 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import * as cheerio from 'cheerio'
 import validator from 'validator'
+import type {
+	ImageData,
+	LinkData,
+	Metadata,
+	OgTags,
+	ResponseHeaders,
+	ScriptData,
+	SecurityHeaders,
+	StructuredData,
+	StylesheetData,
+	TwitterTags,
+} from '@/app/types'
 
-export async function GET(request) {
+export async function GET(request: Request): Promise<Response> {
+	const startedAt = Date.now()
 	const { searchParams } = new URL(request.url)
 	const url = searchParams.get('url')
 
@@ -23,7 +36,7 @@ export async function GET(request) {
 	}
 
 	try {
-		const response = await axios.get(normalizedUrl, {
+		const response = await axios.get<string>(normalizedUrl, {
 			timeout: 15000,
 			maxRedirects: 5,
 			headers: {
@@ -65,8 +78,8 @@ export async function GET(request) {
 			$('meta[http-equiv="content-language"]').attr('content') ||
 			''
 
-		const ogTags = {}
-		$('meta[property^="og:"]').each((i, element) => {
+		const ogTags: OgTags = {}
+		$('meta[property^="og:"]').each((_i, element) => {
 			const property = $(element).attr('property')
 			const content = $(element).attr('content')
 			if (property && content) {
@@ -74,8 +87,8 @@ export async function GET(request) {
 			}
 		})
 
-		const twitterTags = {}
-		$('meta[name^="twitter:"]').each((i, element) => {
+		const twitterTags: TwitterTags = {}
+		$('meta[name^="twitter:"]').each((_i, element) => {
 			const name = $(element).attr('name')
 			const content = $(element).attr('content')
 			if (name && content) {
@@ -83,21 +96,26 @@ export async function GET(request) {
 			}
 		})
 
-		const structuredData = []
-		$('script[type="application/ld+json"]').each((i, element) => {
+		const structuredData: StructuredData[] = []
+		$('script[type="application/ld+json"]').each((_i, element) => {
 			try {
-				const jsonData = JSON.parse($(element).html())
-				structuredData.push(jsonData)
+				const raw = $(element).html()
+				if (raw) {
+					structuredData.push(JSON.parse(raw))
+				}
 			} catch (e) {
-				console.error('Error parsing structured data:', e.message)
+				console.error(
+					'Error parsing structured data:',
+					e instanceof Error ? e.message : String(e)
+				)
 			}
 		})
 
-		const images = []
-		$('img').each((i, element) => {
+		const images: ImageData[] = []
+		$('img').each((_i, element) => {
 			const src = $(element).attr('src')
 			const alt = $(element).attr('alt') || ''
-			const title = $(element).attr('title') || ''
+			const imgTitle = $(element).attr('title') || ''
 			const width = $(element).attr('width') || ''
 			const height = $(element).attr('height') || ''
 
@@ -105,21 +123,26 @@ export async function GET(request) {
 				const absoluteSrc = src.startsWith('http')
 					? src
 					: new URL(src, normalizedUrl).href
-				images.push({ src: absoluteSrc, alt, title, width, height })
+				images.push({ src: absoluteSrc, alt, title: imgTitle, width, height })
 			}
 		})
 
-		const links = {
+		const links: {
+			internal: LinkData[]
+			external: LinkData[]
+			stylesheets: StylesheetData[]
+			scripts: ScriptData[]
+		} = {
 			internal: [],
 			external: [],
 			stylesheets: [],
 			scripts: [],
 		}
 
-		$('a[href]').each((i, element) => {
+		$('a[href]').each((_i, element) => {
 			const href = $(element).attr('href')
 			const text = $(element).text().trim()
-			const title = $(element).attr('title') || ''
+			const linkTitle = $(element).attr('title') || ''
 
 			if (href) {
 				try {
@@ -127,19 +150,26 @@ export async function GET(request) {
 					const isInternal =
 						linkUrl.hostname === new URL(normalizedUrl).hostname
 
-					const linkData = { href: linkUrl.href, text, title }
+					const linkData: LinkData = {
+						href: linkUrl.href,
+						text,
+						title: linkTitle,
+					}
 					if (isInternal) {
 						links.internal.push(linkData)
 					} else {
 						links.external.push(linkData)
 					}
 				} catch (e) {
-					console.error('Error parsing link URL:', e.message)
+					console.error(
+						'Error parsing link URL:',
+						e instanceof Error ? e.message : String(e)
+					)
 				}
 			}
 		})
 
-		$('link[rel="stylesheet"]').each((i, element) => {
+		$('link[rel="stylesheet"]').each((_i, element) => {
 			const href = $(element).attr('href')
 			if (href) {
 				const absoluteHref = href.startsWith('http')
@@ -149,7 +179,7 @@ export async function GET(request) {
 			}
 		})
 
-		$('script[src]').each((i, element) => {
+		$('script[src]').each((_i, element) => {
 			const src = $(element).attr('src')
 			if (src) {
 				const absoluteSrc = src.startsWith('http')
@@ -159,9 +189,10 @@ export async function GET(request) {
 			}
 		})
 
-		const headings = []
-		$('h1, h2, h3, h4, h5, h6').each((i, element) => {
-			const level = element.tagName.toLowerCase()
+		const headings: Metadata['headings'] = []
+		$('h1, h2, h3, h4, h5, h6').each((_i, element) => {
+			const level =
+				element.tagName.toLowerCase() as Metadata['headings'][number]['level']
 			const text = $(element).text().trim()
 			const id = $(element).attr('id') || ''
 			if (text) {
@@ -195,7 +226,7 @@ export async function GET(request) {
 			hasRobots: !!robots,
 		}
 
-		const securityHeaders = {
+		const securityHeaders: SecurityHeaders = {
 			'content-security-policy': response.headers['content-security-policy'],
 			'x-frame-options': response.headers['x-frame-options'],
 			'x-content-type-options': response.headers['x-content-type-options'],
@@ -205,11 +236,13 @@ export async function GET(request) {
 			'permissions-policy': response.headers['permissions-policy'],
 		}
 
-		Object.keys(securityHeaders).forEach((key) => {
+		for (const key of Object.keys(
+			securityHeaders
+		) as (keyof SecurityHeaders)[]) {
 			if (securityHeaders[key] === undefined) {
 				delete securityHeaders[key]
 			}
-		})
+		}
 
 		let favicon =
 			$('link[rel="icon"]').attr('href') ||
@@ -222,7 +255,7 @@ export async function GET(request) {
 			favicon = new URL(favicon, baseUrl.origin).href
 		}
 
-		let ogImage =
+		let ogImage: string | undefined =
 			ogTags['og:image'] ||
 			twitterTags['twitter:image'] ||
 			twitterTags['twitter:image:src']
@@ -232,24 +265,32 @@ export async function GET(request) {
 			ogImage = new URL(ogImage, baseUrl.origin).href
 		}
 
-		const responseHeaders = {
+		const responseHeaders: ResponseHeaders = {
 			'content-type': response.headers['content-type'],
 			'content-length': response.headers['content-length'],
-			server: response.headers['server'],
+			server: response.headers.server,
 			'last-modified': response.headers['last-modified'],
 			'cache-control': response.headers['cache-control'],
-			etag: response.headers['etag'],
-			expires: response.headers['expires'],
+			etag: response.headers.etag,
+			expires: response.headers.expires,
 		}
 
-		Object.keys(responseHeaders).forEach((key) => {
+		for (const key of Object.keys(
+			responseHeaders
+		) as (keyof ResponseHeaders)[]) {
 			if (responseHeaders[key] === undefined) {
 				delete responseHeaders[key]
 			}
-		})
+		}
 
-		const metadata = {
-			url: response.request.res.responseUrl || normalizedUrl,
+		// `responseUrl` is set by axios at runtime on Node http responses but is not
+		// exposed on the public AxiosResponse type. Fall back to the normalized URL.
+		const finalUrl =
+			(response.request as { res?: { responseUrl?: string } } | undefined)?.res
+				?.responseUrl ?? normalizedUrl
+
+		const metadata: Metadata = {
+			url: finalUrl,
 			title,
 			description,
 			keywords,
@@ -258,18 +299,14 @@ export async function GET(request) {
 			charset,
 			viewport,
 			robots,
-
 			ogImage,
 			favicon,
 			images: images.slice(0, 20),
-
 			httpStatus: response.status,
 			responseHeaders,
 			securityHeaders,
-
 			ogTags,
 			twitterTags,
-
 			headings: headings.slice(0, 50),
 			links: {
 				internal: links.internal.slice(0, 20),
@@ -277,37 +314,40 @@ export async function GET(request) {
 				stylesheets: links.stylesheets.slice(0, 10),
 				scripts: links.scripts.slice(0, 10),
 			},
-
 			structuredData,
 			performanceMetrics,
 			seoAnalysis,
-
 			fetchedAt: new Date().toISOString(),
-			processingTime: Date.now() - Date.now(),
+			processingTime: Date.now() - startedAt,
 		}
 
 		return Response.json(metadata)
 	} catch (error) {
-		console.error('Error fetching metadata:', error.message)
+		console.error(
+			'Error fetching metadata:',
+			error instanceof Error ? error.message : String(error)
+		)
 
 		let errorMessage = 'Failed to fetch metadata'
 		let statusCode = 500
 
-		if (error.code === 'ENOTFOUND' || error.code === 'ECONNREFUSED') {
-			errorMessage = 'Website not found or unreachable'
-			statusCode = 404
-		} else if (error.response) {
-			errorMessage = `HTTP ${error.response.status}: ${error.response.statusText}`
-			statusCode = error.response.status
-		} else if (error.code === 'ECONNABORTED') {
-			errorMessage = 'Request timeout - website took too long to respond'
-			statusCode = 408
+		if (error instanceof AxiosError) {
+			if (error.code === 'ENOTFOUND' || error.code === 'ECONNREFUSED') {
+				errorMessage = 'Website not found or unreachable'
+				statusCode = 404
+			} else if (error.response) {
+				errorMessage = `HTTP ${error.response.status}: ${error.response.statusText}`
+				statusCode = error.response.status
+			} else if (error.code === 'ECONNABORTED') {
+				errorMessage = 'Request timeout - website took too long to respond'
+				statusCode = 408
+			}
 		}
 
 		return Response.json(
 			{
 				error: errorMessage,
-				details: error.message,
+				details: error instanceof Error ? error.message : String(error),
 			},
 			{ status: statusCode }
 		)
