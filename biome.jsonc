@@ -1,0 +1,131 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"includes": [
+			"**/*.ts",
+			"**/*.tsx",
+			"**/*.js",
+			"**/*.jsx",
+			"**/*.mjs",
+			"**/*.cjs",
+			"**/*.json",
+			"**/*.jsonc",
+			"**/*.css",
+			"!**/node_modules",
+			"!**/.next",
+			"!**/out",
+			"!**/dist",
+			"!**/build",
+			"!**/*.min.js",
+			"!**/*.min.css",
+			"!**/pnpm-lock.yaml",
+			"!**/public/favicon/manifest.json",
+			"!**/public/favicon/browserconfig.xml"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 80,
+		"lineEnding": "lf",
+		"formatWithErrors": false
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "double",
+			"semicolons": "asNeeded",
+			"trailingCommas": "es5",
+			"arrowParentheses": "always",
+			"bracketSpacing": true,
+			"bracketSameLine": false,
+			"quoteProperties": "asNeeded"
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": true,
+			"trailingCommas": "none"
+		},
+		"parser": {
+			"allowComments": true,
+			"allowTrailingCommas": false
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedVariables": {
+					"level": "error",
+					"options": { "ignoreRestSiblings": true }
+				},
+				"noUnusedImports": "error",
+				"noUnusedFunctionParameters": "error",
+				"useExhaustiveDependencies": "error",
+				"noUndeclaredVariables": "error"
+			},
+			"style": {
+				"useConst": "error",
+				"useTemplate": "error",
+				"useImportType": "error",
+				"useNodejsImportProtocol": "error",
+				"useNumberNamespace": "error",
+				"useSelfClosingElements": "error",
+				"useShorthandAssign": "error",
+				"useFilenamingConvention": "off"
+			},
+			"suspicious": {
+				"noVar": "error",
+				"noExplicitAny": "error",
+				"noConsole": {
+					"level": "warn",
+					"options": { "allow": ["error", "warn"] }
+				},
+				"noArrayIndexKey": "warn",
+				"noDoubleEquals": "error",
+				"noDuplicateObjectKeys": "error"
+			},
+			"complexity": { "recommended": true },
+			"a11y": { "recommended": true },
+			"performance": { "recommended": true },
+			"security": { "recommended": true },
+			"nursery": {
+				"useSortedClasses": {
+					"level": "warn",
+					"options": {
+						"attributes": ["className"],
+						"functions": ["clsx", "cva", "cn", "classnames"]
+					}
+				}
+			}
+		}
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["src/app/layout.tsx"],
+			"linter": {
+				"rules": {
+					"security": {
+						"noDangerouslySetInnerHtml": "off"
+					}
+				}
+			}
+		}
+	]
+}
