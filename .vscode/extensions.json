@@ -1,7 +1,6 @@
 {
 	"recommendations": [
-		"esbenp.prettier-vscode",
-		"dbaeumer.vscode-eslint",
+		"biomejs.biome",
 		"bradlc.vscode-tailwindcss",
 		"mgmcdermott.vscode-language-babel",
 		"dsznajder.es7-react-js-snippets",
