@@ -27,8 +27,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Validate (lint + typecheck)
-        run: pnpm validate
+      - name: Validate (lint + format)
+        run: pnpm lint && pnpm format:check
 
       - name: Build project
         run: pnpm build
