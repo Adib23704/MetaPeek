@@ -1,4 +1,5 @@
 {
+	// Update this URL whenever @biomejs/biome is upgraded in package.json.
 	"$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
 	"vcs": {
 		"enabled": true,
@@ -24,8 +25,7 @@
 			"!**/*.min.js",
 			"!**/*.min.css",
 			"!**/pnpm-lock.yaml",
-			"!**/public/favicon/manifest.json",
-			"!**/public/favicon/browserconfig.xml"
+			"!**/public/favicon/manifest.json"
 		]
 	},
 	"formatter": {
@@ -89,9 +89,7 @@
 					"level": "warn",
 					"options": { "allow": ["error", "warn"] }
 				},
-				"noArrayIndexKey": "warn",
-				"noDoubleEquals": "error",
-				"noDuplicateObjectKeys": "error"
+				"noArrayIndexKey": "warn"
 			},
 			"complexity": { "recommended": true },
 			"a11y": { "recommended": true },
@@ -123,6 +121,16 @@
 				"rules": {
 					"security": {
 						"noDangerouslySetInnerHtml": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["src/app/components/MetadataPreview.tsx"],
+			"linter": {
+				"rules": {
+					"performance": {
+						"noImgElement": "off"
 					}
 				}
 			}
