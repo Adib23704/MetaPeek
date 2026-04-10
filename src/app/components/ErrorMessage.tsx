@@ -1,4 +1,8 @@
-export default function ErrorMessage({ error }) {
+interface ErrorMessageProps {
+	error: string
+}
+
+export default function ErrorMessage({ error }: ErrorMessageProps) {
 	if (!error) return null
 
 	return (
@@ -10,6 +14,7 @@ export default function ErrorMessage({ error }) {
 							className="h-4 w-4 text-red-400 sm:h-5 sm:w-5"
 							viewBox="0 0 20 20"
 							fill="currentColor"
+							aria-hidden="true"
 						>
 							<path
 								fillRule="evenodd"
@@ -19,10 +24,10 @@ export default function ErrorMessage({ error }) {
 						</svg>
 					</div>
 					<div className="min-w-0 flex-1">
-						<h3 className="mb-1 text-sm font-medium text-red-800">
+						<h3 className="mb-1 font-medium text-red-800 text-sm">
 							Error fetching metadata
 						</h3>
-						<p className="text-xs break-words text-red-700 sm:text-sm">
+						<p className="break-words text-red-700 text-xs sm:text-sm">
 							{error}
 						</p>
 					</div>
