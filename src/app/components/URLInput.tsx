@@ -44,6 +44,7 @@ export default function URLInput({ onSubmit, loading }: URLInputProps) {
 								: 'border-gray-300 focus:border-blue-500'
 						} ${loading ? 'opacity-75' : ''}`}
 						disabled={loading}
+						autoFocus
 					/>
 					{loading && (
 						<div className="absolute top-1/2 right-2 -translate-y-1/2 sm:right-3">

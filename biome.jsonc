@@ -134,6 +134,16 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["src/app/components/URLInput.tsx"],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"noAutofocus": "off"
+					}
+				}
+			}
 		}
 	]
 }
