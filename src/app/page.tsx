@@ -38,7 +38,7 @@ export default function Home() {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 pb-24">
+		<div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 pb-24">
 			<div className="container mx-auto px-4 py-12">
 				<div className="mb-8 text-center sm:mb-10 lg:mb-12">
 					<div className="mb-4 flex flex-col items-center justify-center gap-3 sm:mb-6 sm:flex-row sm:gap-4">
@@ -69,7 +69,7 @@ export default function Home() {
 
 					<p className="mx-auto max-w-xs px-2 text-base text-gray-600 leading-relaxed sm:max-w-2xl sm:px-0 sm:text-lg lg:max-w-4xl lg:text-xl">
 						Instantly preview website metadata, Open Graph images, and technical
-						details. No signup required – just paste a URL and explore!
+						details. No signup required - just paste a URL and explore!
 					</p>
 				</div>
 				<URLInput onSubmit={handleFetchMetadata} loading={loading} />

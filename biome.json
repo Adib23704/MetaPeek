@@ -1,5 +1,4 @@
 {
-	// Update this URL whenever @biomejs/biome is upgraded in package.json.
 	"$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
 	"vcs": {
 		"enabled": true,
@@ -26,7 +25,6 @@
 			"!**/*.min.css",
 			"!**/pnpm-lock.yaml",
 			"!**/public/favicon/manifest.json",
-			// Biome's CSS parser doesn't yet support Tailwind 4 @theme/@utility directives.
 			"!**/src/app/globals.css"
 		]
 	},
@@ -117,7 +115,6 @@
 		}
 	},
 	"overrides": [
-		// layout.tsx embeds a JSON-LD <script> via dangerouslySetInnerHTML for SEO.
 		{
 			"includes": ["src/app/layout.tsx"],
 			"linter": {
@@ -128,8 +125,6 @@
 				}
 			}
 		},
-		// MetadataPreview renders untrusted remote favicon and OG image URLs;
-		// next/image's remotePatterns allowlist is a liability for arbitrary inputs.
 		{
 			"includes": ["src/app/components/MetadataPreview.tsx"],
 			"linter": {
@@ -140,8 +135,6 @@
 				}
 			}
 		},
-		// URLInput is the only interactive control on the landing page;
-		// autofocus is the intentional UX so users can start typing immediately.
 		{
 			"includes": ["src/app/components/URLInput.tsx"],
 			"linter": {

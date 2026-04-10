@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
 	title: 'MetaPeek - Website Metadata Preview Tool',
 	description:
-		'Instantly preview website metadata, Open Graph images, and technical details. No signup required – just paste a URL and explore!',
+		'Instantly preview website metadata, Open Graph images, and technical details. No signup required - just paste a URL and explore!',
 	keywords:
 		'metadata, open graph, SEO, website preview, meta tags, developer tools',
 	authors: [{ name: 'Adib23704', url: 'https://adibdev.me' }],
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: 'MetaPeek - Website Metadata Preview Tool',
 		description:
-			'Instantly preview website metadata, Open Graph images, and technical details. No signup required – just paste a URL and explore!',
+			'Instantly preview website metadata, Open Graph images, and technical details. No signup required - just paste a URL and explore!',
 		url: 'https://metapeek.adibdev.me',
 		siteName: 'MetaPeek',
 		images: [
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 		card: 'summary_large_image',
 		title: 'MetaPeek - Website Metadata Preview Tool',
 		description:
-			'Instantly preview website metadata, Open Graph images, and technical details. No signup required – just paste a URL and explore!',
+			'Instantly preview website metadata, Open Graph images, and technical details. No signup required - just paste a URL and explore!',
 		images: ['/images/cover-image.jpg'],
 		creator: '@adib2374',
 	},
@@ -171,7 +171,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 							'@type': 'WebApplication',
 							name: 'MetaPeek',
 							description:
-								'Instantly preview website metadata, Open Graph images, and technical details. No signup required – just paste a URL and explore!',
+								'Instantly preview website metadata, Open Graph images, and technical details. No signup required - just paste a URL and explore!',
 							url: 'https://metapeek.adibdev.me',
 							applicationCategory: 'MultimediaApplication',
 							operatingSystem: 'Web Browser',
