@@ -31,12 +31,13 @@ MetaPeek is a web application that allows you to enter a URL and instantly see i
 ## 🛠️ Tech Stack
 
 - **Framework:** [Next.js](https://nextjs.org/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/) (strict mode)
 - **Library:** [React](https://reactjs.org/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **Backend API:** Next.js API Routes
 - **HTTP Requests:** [Axios](https://axios-http.com/)
 - **HTML Parsing:** [Cheerio](https://cheerio.js.org/)
-- **Linting & Formatting:** [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/)
+- **Linting & Formatting:** [Biome](https://biomejs.dev/) (formatter, linter, import organizer)
 
 ## 📸 Screenshots
 
@@ -49,7 +50,7 @@ MetaPeek is a web application that allows you to enter a URL and instantly see i
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en/) (v20.x or later recommended)
-- [npm](https://www.npmjs.com/)
+- [pnpm](https://pnpm.io/) (v10.x or later)
 
 ### Installation & Setup
 
@@ -68,44 +69,64 @@ MetaPeek is a web application that allows you to enter a URL and instantly see i
 3.  **Install dependencies:**
 
     ```sh
-    npm install
+    pnpm install
     ```
 
 4.  **Run the development server:**
     ```sh
-    npm run dev
+    pnpm dev
     ```
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 **Build for production:**
 
 ```sh
-npm run build
+pnpm build
 ```
 
 ## 🔌 API Endpoint
 
 - **URL:** `/api/fetchMeta`
-- **Method:** `POST`
-- **Request Query:** `?url=https://example.com`
+- **Method:** `GET`
+- **Query parameter:** `?url=https://example.com` (URL-encode the value)
 - **Success Response (200):**
-  A JSON object containing the fetched metadata.
+  A JSON object describing the fetched page. The full shape is defined in [`src/app/types.ts`](./src/app/types.ts) as the `Metadata` interface. Representative slice:
+
   ```json
   {
-  	"title": "Example Domain",
-  	"description": "An example description...",
-  	"image": "https://example.com/image.png",
-  	"ogTitle": "Example Open Graph Title",
-  	"ogDescription": "Example Open Graph description...",
-  	"ogImage": "https://example.com/og-image.png",
-  	"siteName": "Example Site",
-  	"icon": "/favicon.ico"
+    "url": "https://example.com",
+    "title": "Example Domain",
+    "description": "An example description...",
+    "favicon": "https://example.com/favicon.ico",
+    "ogImage": "https://example.com/og-image.png",
+    "httpStatus": 200,
+    "ogTags": { "og:title": "Example", "og:description": "..." },
+    "twitterTags": { "twitter:card": "summary_large_image" },
+    "performanceMetrics": {
+      "htmlSize": 12345,
+      "totalImages": 4,
+      "totalLinks": 17,
+      "hasOpenGraph": true,
+      "hasTwitterCards": true,
+      "hasStructuredData": false
+    },
+    "seoAnalysis": {
+      "hasTitle": true,
+      "titleLength": 14,
+      "hasDescription": true,
+      "h1Count": 1
+    },
+    "fetchedAt": "2026-04-10T12:00:00.000Z",
+    "processingTime": 432
   }
   ```
+
 - **Error Response (4xx - 5xx):**
+
   ```json
   {
-  	"error": "A descriptive error message."
+    "error": "A descriptive error message.",
+    "details": "Optional underlying error details"
   }
   ```
 
