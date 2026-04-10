@@ -8,7 +8,9 @@
   <a href="https://github.com/adib23704/MetaPeek/actions/workflows/build.yml">
     <img src="https://github.com/adib23704/MetaPeek/actions/workflows/build.yml/badge.svg" alt="Build Status">
   </a>
-  <img src="https://img.shields.io/badge/Next.js-15.x-black?logo=next.js" alt="Next.js">
+  <img src="https://img.shields.io/badge/Next.js-16.x-black?logo=next.js" alt="Next.js">
+  <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Biome-2.x-60A5FA?logo=biome" alt="Biome">
   <img src="https://img.shields.io/badge/React-19.x-blue?logo=react" alt="React">
   <img src="https://img.shields.io/badge/Tailwind_CSS-4.x-38B2AC?logo=tailwind-css" alt="Tailwind CSS">
   <img src="https://img.shields.io/github/license/Adib23704/MetaPeek" alt="License">
@@ -137,20 +139,23 @@ MetaPeek/
 ├── src/
 │   ├── app/
 │   │   ├── api/
-│   │   │   ├── fetchMeta/
-│   │   │   │   └── route.js          # Main metadata extraction API
+│   │   │   └── fetchMeta/
+│   │   │       └── route.ts          # Metadata extraction API (GET)
 │   │   ├── components/
-│   │   │   ├── URLInput.js           # URL input form component
-│   │   │   ├── MetadataPreview.js    # Main preview component
-│   │   │   ├── ErrorMessage.js       # Error handling component
-│   │   ├── globals.css               # Global styles with Tailwind
-│   │   ├── layout.js                 # Root layout component
-│   │   ├── page.js                   # Main page component
-├── public/
-├── .eslintrc.json                    # ESLint configuration
-├── .prettierrc.json                  # Prettier configuration
+│   │   │   ├── ErrorMessage.tsx      # Error display component
+│   │   │   ├── MetadataPreview.tsx   # Tabbed preview viewer
+│   │   │   └── URLInput.tsx          # URL input form
+│   │   ├── globals.css               # Global styles (Tailwind 4)
+│   │   ├── layout.tsx                # Root layout
+│   │   ├── page.tsx                  # Main page
+│   │   └── types.ts                  # Metadata interface + sub-types
+├── public/                           # Logo, favicons, screenshots
+├── .github/workflows/build.yml       # CI: lint + typecheck + build
+├── .vscode/                          # Workspace settings (Biome)
+├── biome.jsonc                       # Biome formatter + linter config
+├── tsconfig.json                     # TypeScript (strict)
+├── next.config.ts                    # Next.js configuration
 ├── postcss.config.mjs                # PostCSS configuration
-├── next.config.js                    # Next.js configuration
 └── package.json
 ```
 
