@@ -1,16 +1,34 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 import { useState } from 'react'
+import type { Metadata } from '@/app/types'
 
-export default function MetadataPreview({ metadata }) {
-	const [activeTab, setActiveTab] = useState('overview')
-	const [showRawData, setShowRawData] = useState(false)
-	const [imageError, setImageError] = useState(false)
-	const [faviconError, setFaviconError] = useState(false)
+interface MetadataPreviewProps {
+	metadata: Metadata | null
+}
+
+type TabId =
+	| 'overview'
+	| 'seo'
+	| 'social'
+	| 'technical'
+	| 'structure'
+	| 'security'
+
+interface Tab {
+	id: TabId
+	label: string
+	icon: string
+}
+
+export default function MetadataPreview({ metadata }: MetadataPreviewProps) {
+	const [activeTab, setActiveTab] = useState<TabId>('overview')
+	const [showRawData, setShowRawData] = useState<boolean>(false)
+	const [imageError, setImageError] = useState<boolean>(false)
+	const [faviconError, setFaviconError] = useState<boolean>(false)
 
 	if (!metadata) return null
 
-	const tabs = [
+	const tabs: Tab[] = [
 		{ id: 'overview', label: 'Overview', icon: '📋' },
 		{ id: 'seo', label: 'SEO Analysis', icon: '🔍' },
 		{ id: 'social', label: 'Social Media', icon: '📱' },
@@ -32,13 +50,13 @@ export default function MetadataPreview({ metadata }) {
 								onError={() => setFaviconError(true)}
 							/>
 						)}
-						<span className="text-sm break-all text-gray-600">
+						<span className="break-all text-gray-600 text-sm">
 							{metadata.url}
 						</span>
 					</div>
 					<div className="flex items-center space-x-2">
 						<span
-							className={`rounded px-2 py-1 text-sm font-semibold ${
+							className={`rounded px-2 py-1 font-semibold text-sm ${
 								metadata.httpStatus >= 200 && metadata.httpStatus < 300
 									? 'bg-green-100 text-green-800'
 									: metadata.httpStatus >= 300 && metadata.httpStatus < 400
@@ -49,7 +67,7 @@ export default function MetadataPreview({ metadata }) {
 							{metadata.httpStatus}
 						</span>
 						{metadata.language && (
-							<span className="rounded bg-blue-100 px-2 py-1 text-sm text-blue-800">
+							<span className="rounded bg-blue-100 px-2 py-1 text-blue-800 text-sm">
 								{metadata.language}
 							</span>
 						)}
@@ -58,10 +76,10 @@ export default function MetadataPreview({ metadata }) {
 
 				<div className="grid gap-6 md:grid-cols-3">
 					<div className="space-y-4 md:col-span-2">
-						<h1 className="text-2xl leading-tight font-bold text-gray-900">
+						<h1 className="font-bold text-2xl text-gray-900 leading-tight">
 							{metadata.title}
 						</h1>
-						<p className="leading-relaxed text-gray-600">
+						<p className="text-gray-600 leading-relaxed">
 							{metadata.description}
 						</p>
 						{metadata.keywords && (
@@ -72,7 +90,7 @@ export default function MetadataPreview({ metadata }) {
 									.map((keyword, index) => (
 										<span
 											key={index}
-											className="rounded bg-gray-100 px-2 py-1 text-sm text-gray-700"
+											className="rounded bg-gray-100 px-2 py-1 text-gray-700 text-sm"
 										>
 											{keyword.trim()}
 										</span>
@@ -86,7 +104,7 @@ export default function MetadataPreview({ metadata }) {
 							<div className="relative w-full max-w-sm">
 								<img
 									src={metadata.ogImage}
-									alt="Open Graph Image"
+									alt="Open Graph preview"
 									className="h-auto w-full rounded-lg shadow-md"
 									onError={() => setImageError(true)}
 								/>
@@ -101,13 +119,14 @@ export default function MetadataPreview({ metadata }) {
 			</div>
 
 			<div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
-				<div className="border-b border-gray-200">
+				<div className="border-gray-200 border-b">
 					<nav className="flex space-x-4 overflow-x-auto px-4 sm:space-x-8 sm:px-6">
 						{tabs.map((tab) => (
 							<button
 								key={tab.id}
+								type="button"
 								onClick={() => setActiveTab(tab.id)}
-								className={`flex-shrink-0 border-b-2 px-2 py-4 text-sm font-medium whitespace-nowrap transition-colors ${
+								className={`flex-shrink-0 whitespace-nowrap border-b-2 px-2 py-4 font-medium text-sm transition-colors ${
 									activeTab === tab.id
 										? 'border-blue-500 text-blue-600'
 										: 'border-transparent text-gray-500 hover:text-gray-700'
@@ -187,36 +206,38 @@ export default function MetadataPreview({ metadata }) {
 										SEO Checklist
 									</h3>
 									<div className="space-y-2">
-										{[
-											{
-												label: 'Has Title Tag',
-												value: metadata.seoAnalysis.hasTitle,
-											},
-											{
-												label: 'Has Meta Description',
-												value: metadata.seoAnalysis.hasDescription,
-											},
-											{
-												label: 'Has H1 Tag',
-												value: metadata.seoAnalysis.hasH1,
-											},
-											{
-												label: 'Has Language Attribute',
-												value: metadata.seoAnalysis.hasLang,
-											},
-											{
-												label: 'Has Viewport Meta',
-												value: metadata.seoAnalysis.hasViewport,
-											},
-											{
-												label: 'Has Open Graph Tags',
-												value: metadata.performanceMetrics.hasOpenGraph,
-											},
-										].map((item, index) => (
+										{(
+											[
+												{
+													label: 'Has Title Tag',
+													value: metadata.seoAnalysis.hasTitle,
+												},
+												{
+													label: 'Has Meta Description',
+													value: metadata.seoAnalysis.hasDescription,
+												},
+												{
+													label: 'Has H1 Tag',
+													value: metadata.seoAnalysis.hasH1,
+												},
+												{
+													label: 'Has Language Attribute',
+													value: metadata.seoAnalysis.hasLang,
+												},
+												{
+													label: 'Has Viewport Meta',
+													value: metadata.seoAnalysis.hasViewport,
+												},
+												{
+													label: 'Has Open Graph Tags',
+													value: metadata.performanceMetrics.hasOpenGraph,
+												},
+											] satisfies { label: string; value: boolean }[]
+										).map((item, index) => (
 											<div key={index} className="flex items-center space-x-2">
 												<span
 													className={`h-4 w-4 rounded-full ${item.value ? 'bg-green-500' : 'bg-red-500'}`}
-												></span>
+												/>
 												<span className="text-sm">{item.label}</span>
 											</div>
 										))}
@@ -273,7 +294,7 @@ export default function MetadataPreview({ metadata }) {
 												</div>
 											))
 										) : (
-											<span className="text-sm text-gray-500">
+											<span className="text-gray-500 text-sm">
 												No Open Graph tags found
 											</span>
 										)}
@@ -298,7 +319,7 @@ export default function MetadataPreview({ metadata }) {
 												)
 											)
 										) : (
-											<span className="text-sm text-gray-500">
+											<span className="text-gray-500 text-sm">
 												No Twitter Card tags found
 											</span>
 										)}
@@ -334,7 +355,7 @@ export default function MetadataPreview({ metadata }) {
 										Structured Data
 									</h3>
 									<div className="max-h-60 overflow-y-auto rounded bg-gray-50 p-3">
-										<pre className="text-sm break-all whitespace-pre-wrap text-gray-800">
+										<pre className="whitespace-pre-wrap break-all text-gray-800 text-sm">
 											{JSON.stringify(metadata.structuredData, null, 2)}
 										</pre>
 									</div>
@@ -415,7 +436,7 @@ export default function MetadataPreview({ metadata }) {
 											)
 										)
 									) : (
-										<span className="text-sm text-gray-500">
+										<span className="text-gray-500 text-sm">
 											No security headers found
 										</span>
 									)}
@@ -425,12 +446,13 @@ export default function MetadataPreview({ metadata }) {
 					)}
 				</div>
 
-				<div className="border-t border-gray-200 px-6 py-4">
+				<div className="border-gray-200 border-t px-6 py-4">
 					<div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-						<span className="text-center text-sm text-gray-600 sm:text-left">
+						<span className="text-center text-gray-600 text-sm sm:text-left">
 							Fetched at: {new Date(metadata.fetchedAt).toLocaleString()}
 						</span>
 						<button
+							type="button"
 							onClick={() => setShowRawData(!showRawData)}
 							className="btn-primary"
 						>
@@ -440,7 +462,7 @@ export default function MetadataPreview({ metadata }) {
 
 					{showRawData && (
 						<div className="mt-4">
-							<pre className="scrollbar-hide max-h-96 overflow-auto rounded-lg bg-gray-900 p-4 text-sm break-all whitespace-pre-wrap text-green-400">
+							<pre className="scrollbar-hide max-h-96 overflow-auto whitespace-pre-wrap break-all rounded-lg bg-gray-900 p-4 text-green-400 text-sm">
 								{JSON.stringify(metadata, null, 2)}
 							</pre>
 						</div>
