@@ -87,9 +87,9 @@ export default function MetadataPreview({ metadata }: MetadataPreviewProps) {
 								{metadata.keywords
 									.split(',')
 									.slice(0, 20)
-									.map((keyword, index) => (
+									.map((keyword) => (
 										<span
-											key={index}
+											key={keyword.trim()}
 											className="rounded bg-gray-100 px-2 py-1 text-gray-700 text-sm"
 										>
 											{keyword.trim()}
@@ -233,8 +233,11 @@ export default function MetadataPreview({ metadata }: MetadataPreviewProps) {
 													value: metadata.performanceMetrics.hasOpenGraph,
 												},
 											] satisfies { label: string; value: boolean }[]
-										).map((item, index) => (
-											<div key={index} className="flex items-center space-x-2">
+										).map((item) => (
+											<div
+												key={item.label}
+												className="flex items-center space-x-2"
+											>
 												<span
 													className={`h-4 w-4 rounded-full ${item.value ? 'bg-green-500' : 'bg-red-500'}`}
 												/>
@@ -372,8 +375,11 @@ export default function MetadataPreview({ metadata }: MetadataPreviewProps) {
 										Heading Structure
 									</h3>
 									<div className="max-h-60 space-y-1 overflow-y-auto rounded bg-gray-50 p-3">
-										{metadata.headings.map((heading, index) => (
-											<div key={index} className="text-sm">
+										{metadata.headings.map((heading) => (
+											<div
+												key={`${heading.level}:${heading.text}`}
+												className="text-sm"
+											>
 												<span
 													className={`font-mono text-blue-600 ${
 														heading.level === 'h1' ? 'font-bold' : ''

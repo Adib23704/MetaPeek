@@ -25,7 +25,8 @@
 			"!**/*.min.js",
 			"!**/*.min.css",
 			"!**/pnpm-lock.yaml",
-			"!**/public/favicon/manifest.json"
+			"!**/public/favicon/manifest.json",
+			"!**/src/app/globals.css"
 		]
 	},
 	"formatter": {
