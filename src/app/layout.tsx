@@ -1,9 +1,11 @@
+import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import type { ReactNode } from 'react'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: 'MetaPeek - Website Metadata Preview Tool',
 	description:
 		'Instantly preview website metadata, Open Graph images, and technical details. No signup required – just paste a URL and explore!',
@@ -59,7 +61,11 @@ export const metadata = {
 	},
 }
 
-export default function RootLayout({ children }) {
+interface RootLayoutProps {
+	children: ReactNode
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang="en">
 			<head>
