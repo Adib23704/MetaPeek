@@ -31,7 +31,7 @@ importers:
         version: 13.15.35
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.0.0
+        specifier: ~2.4.0
         version: 2.4.11
       '@tailwindcss/postcss':
         specifier: ^4.2.2
